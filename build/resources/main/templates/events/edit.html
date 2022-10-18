@@ -5,7 +5,7 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 <h1 th:text="${title}"></h1>
-<form method="post" th:action="@{/events/edit}"> //?
+<form method="post" th:action="@{/events/edit}">
     <div class="form-group">
         <label>New Name
             <input type="text" name="name" th:value="${event.name}" class="form-control">
@@ -19,7 +19,7 @@
     <div class="form-group">
         <input type="submit" value ="Edit Event" class="btn btn-success">
     </div>
-    <input type="hidden" th:value="${event.id}" name="eventId" /> //?
+    <input type="hidden" th:value="${event.id}" name="eventId" />
 </form>
 
 </body>
