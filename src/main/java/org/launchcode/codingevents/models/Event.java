@@ -1,15 +1,18 @@
 package org.launchcode.codingevents.models;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
 public class Event {
 
+    @Id
+    @GeneratedValue
     private int id;
-    private static int nextId = 1;
+
    @NotBlank(message = "Name is required.")
    @Size(min = 3, max = 50, message = "Name must be between 3-50 characters.")
     private String name;
@@ -27,15 +30,24 @@ public class Event {
    @Positive(message = "Invalid number of attendees. Must be one or more.")
    private int numberOfAttendees;
 
+    private EventType type;
+
     public Event() {}
-    public Event(String name, String location, String description, String contactEmail, int numberOfAttendees) {
+    public Event(String name, String location, String description, String contactEmail, int numberOfAttendees, EventType type) {
         this.name = name;
         this.location = location;
         this.description = description;
         this.contactEmail = contactEmail;
         this.numberOfAttendees = numberOfAttendees;
-        this.id = nextId;
-        nextId++;
+        this.type = type;
+    }
+
+    public EventType getType() {
+        return type;
+    }
+
+    public void setType(EventType type) {
+        this.type = type;
     }
 
     public String getName() {
