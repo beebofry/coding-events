@@ -7,32 +7,31 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity
-public class Event {
+public class Event extends AbstractEntity {
 
-    @Id
-    @GeneratedValue
-    private int id;
 
-   @NotBlank(message = "Name is required.")
-   @Size(min = 3, max = 50, message = "Name must be between 3-50 characters.")
+    @NotBlank(message = "Name is required.")
+    @Size(min = 3, max = 50, message = "Name must be between 3-50 characters.")
     private String name;
-   @NotBlank(message = "Please enter a location.")
-   @Size(max = 500, message = "Description too long!")
-   private String location;
+    @NotBlank(message = "Please enter a location.")
+    @Size(max = 500, message = "Description too long!")
+    private String location;
 
-   @Size(max = 500, message = "Description too long!")
+    @Size(max = 500, message = "Description too long!")
     private String description;
-   @NotBlank(message = "Email is required.")
-   @Email(message = "Invalid email. Try again.")
-   private String contactEmail;
-   private boolean mustRegister = true;
+    @NotBlank(message = "Email is required.")
+    @Email(message = "Invalid email. Try again.")
+    private String contactEmail;
+    private boolean mustRegister = true;
 
-   @Positive(message = "Invalid number of attendees. Must be one or more.")
-   private int numberOfAttendees;
+    @Positive(message = "Invalid number of attendees. Must be one or more.")
+    private int numberOfAttendees;
 
     private EventType type;
 
-    public Event() {}
+    public Event() {
+    }
+
     public Event(String name, String location, String description, String contactEmail, int numberOfAttendees, EventType type) {
         this.name = name;
         this.location = location;
@@ -66,9 +65,6 @@ public class Event {
         this.description = description;
     }
 
-    public int getId() {
-        return id;
-    }
 
     public String getContactEmail() {
         return contactEmail;
@@ -99,17 +95,6 @@ public class Event {
     public String toString() {
         return name;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Event event = (Event) o;
-        return id == event.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }
+
+
