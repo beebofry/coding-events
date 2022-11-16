@@ -1,15 +1,11 @@
 package org.launchcode.codingevents.models;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.*;
-import java.util.Date;
-import java.util.Objects;
 
 @Entity
 public class Event extends AbstractEntity {
-
-
     @NotBlank(message = "Name is required.")
     @Size(min = 3, max = 50, message = "Name must be between 3-50 characters.")
     private String name;
@@ -27,26 +23,28 @@ public class Event extends AbstractEntity {
     @Positive(message = "Invalid number of attendees. Must be one or more.")
     private int numberOfAttendees;
 
-    private EventType type;
+    @ManyToOne
+    @NotNull(message = "Category is required")
+    private EventCategory eventCategory;
 
     public Event() {
     }
 
-    public Event(String name, String location, String description, String contactEmail, int numberOfAttendees, EventType type) {
+    public Event(String name, String location, String description, String contactEmail, int numberOfAttendees, EventCategory eventCategory) {
         this.name = name;
         this.location = location;
         this.description = description;
         this.contactEmail = contactEmail;
         this.numberOfAttendees = numberOfAttendees;
-        this.type = type;
+        this.eventCategory = eventCategory;
     }
 
-    public EventType getType() {
-        return type;
+    public EventCategory getEventCategory() {
+        return eventCategory;
     }
 
-    public void setType(EventType type) {
-        this.type = type;
+    public void setEventCategory(EventCategory eventCategory) {
+        this.eventCategory = eventCategory;
     }
 
     public String getName() {
