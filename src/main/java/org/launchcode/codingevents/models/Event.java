@@ -1,41 +1,32 @@
 package org.launchcode.codingevents.models;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Event extends AbstractEntity {
     @NotBlank(message = "Name is required.")
     @Size(min = 3, max = 50, message = "Name must be between 3-50 characters.")
     private String name;
-    @NotBlank(message = "Please enter a location.")
-    @Size(max = 500, message = "Description too long!")
-    private String location;
-
-    @Size(max = 500, message = "Description too long!")
-    private String description;
-    @NotBlank(message = "Email is required.")
-    @Email(message = "Invalid email. Try again.")
-    private String contactEmail;
-    private boolean mustRegister = true;
-
-    @Positive(message = "Invalid number of attendees. Must be one or more.")
-    private int numberOfAttendees;
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @Valid
+    @NotNull
+    private EventDetails eventDetails;
     @ManyToOne
     @NotNull(message = "Category is required")
     private EventCategory eventCategory;
+
+    @ManyToMany
+    private final List<Tag> tags = new ArrayList<>();
 
     public Event() {
     }
 
     public Event(String name, String location, String description, String contactEmail, int numberOfAttendees, EventCategory eventCategory) {
         this.name = name;
-        this.location = location;
-        this.description = description;
-        this.contactEmail = contactEmail;
-        this.numberOfAttendees = numberOfAttendees;
         this.eventCategory = eventCategory;
     }
 
@@ -55,40 +46,21 @@ public class Event extends AbstractEntity {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public EventDetails getEventDetails() {
+        return eventDetails;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setEventDetails(EventDetails eventDetails) {
+        this.eventDetails = eventDetails;
     }
 
-
-    public String getContactEmail() {
-        return contactEmail;
+    public List<Tag> getTags() {
+        return tags;
     }
 
-    public int getNumberOfAttendees() {
-        return numberOfAttendees;
+    public void addTag(Tag tag) {
+        this.tags.add(tag);
     }
-
-    public void setNumberOfAttendees(int numberOfAttendees) {
-        this.numberOfAttendees = numberOfAttendees;
-    }
-
-
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     @Override
     public String toString() {
         return name;

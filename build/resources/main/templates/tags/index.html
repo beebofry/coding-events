@@ -3,16 +3,16 @@
 <head th:replace="fragments :: head"></head>
 <body class="container">
 
-<nav th:replace="fragments :: header"></nav>
+<header th:replace="fragments :: header"></header>
 
 <table class="table table-striped">
     <thead>
     <tr>
-        <th>Category Name</th>
+        <th>Tag Name</th>
     </tr>
     </thead>
-    <tr th:each="category : ${categories}">
-        <td><a th:text="${category.name}" th:href="'/events?categoryId=' + ${category.id}"></a></td>
+    <tr th:each="tag : ${tags}">
+        <td><a th:text="${tag.displayName}" th:href="'/events?tagId=' + ${tag.id}"></a></td>
     </tr>
 
 </table>
